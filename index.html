@@ -1,305 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Team Randomizer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg: #0f172a;
-      --panel: #111827;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --accent: #22c55e;
-      --danger: #ef4444;
-      --border: #374151;
-    }
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
-    .container { max-width: 900px; margin: 40px auto; padding: 24px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
-    h1 { margin: 0 0 12px; font-size: 24px; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .card { padding: 16px; border: 1px solid var(--border); border-radius: 12px; }
-    label { display: block; font-weight: 600; margin-bottom: 6px; }
-    input[type="text"] { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: #0b1220; color: var(--text); }
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; background: #0b1220; color: var(--text); cursor: pointer; }
-    .btn:hover { border-color: var(--accent); }
-    .btn-primary { background: var(--accent); border-color: var(--accent); color: #052e1b; font-weight: 700; }
-    .btn-danger { background: var(--danger); border-color: var(--danger); color: #3b0b0b; font-weight: 700; }
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-    .list { margin-top: 12px; max-height: 340px; overflow: auto; border: 1px solid var(--border); border-radius: 10px; }
-    .list-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--border); }
-    .list-item:last-child { border-bottom: none; }
-    .muted { color: var(--muted); font-size: 12px; }
-    .teams { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-    .team { border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
-    .team h3 { margin: 0 0 8px; font-size: 16px; }
-    .team ul { margin: 0; padding-left: 18px; }
-    .pill { display: inline-block; padding: 2px 8px; border: 1px dashed var(--border); border-radius: 999px; font-size: 12px; }
-    .flex { display: flex; align-items: center; gap: 10px; }
-    .space { height: 8px; }
-  </style>
+	<meta charset="UTF-8" />
+	<title>Team Randomizer</title>
+	<link rel="manifest" href="manifest.json">
+	<meta name="theme-color" content="#22c55e">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<style>
+		:root {
+			--bg: #0f172a;
+			--panel: #111827;
+			--text: #e5e7eb;
+			--muted: #9ca3af;
+			--accent: #22c55e;
+			--danger: #ef4444;
+			--border: #374151;
+		}
+
+		body {
+			margin: 0;
+			font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+			background: var(--bg);
+			color: var(--text);
+		}
+
+		.container {
+			max-width: 900px;
+			margin: 40px auto;
+			padding: 24px;
+			background: var(--panel);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+		}
+
+		h1 {
+			margin: 0 0 12px;
+			font-size: 24px;
+		}
+
+		.row {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 24px;
+		}
+
+		.card {
+			padding: 16px;
+			border: 1px solid var(--border);
+			border-radius: 12px;
+		}
+
+		label {
+			display: block;
+			font-weight: 600;
+			margin-bottom: 6px;
+		}
+
+		input[type="text"] {
+			width: 100%;
+			padding: 10px;
+			border-radius: 8px;
+			border: 1px solid var(--border);
+			background: #0b1220;
+			color: var(--text);
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 10px 14px;
+			border: 1px solid var(--border);
+			border-radius: 10px;
+			background: #0b1220;
+			color: var(--text);
+			cursor: pointer;
+		}
+
+		.btn:hover {
+			border-color: var(--accent);
+		}
+
+		.btn-primary {
+			background: var(--accent);
+			border-color: var(--accent);
+			color: #052e1b;
+			font-weight: 700;
+		}
+
+		.btn-danger {
+			background: var(--danger);
+			border-color: var(--danger);
+			color: #3b0b0b;
+			font-weight: 700;
+		}
+
+		.actions {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+			margin-top: 12px;
+		}
+
+		.list {
+			margin-top: 12px;
+			max-height: 340px;
+			overflow: auto;
+			border: 1px solid var(--border);
+			border-radius: 10px;
+		}
+
+		.list-item {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 10px 12px;
+			border-bottom: 1px solid var(--border);
+		}
+
+		.list-item:last-child {
+			border-bottom: none;
+		}
+
+		.muted {
+			color: var(--muted);
+			font-size: 12px;
+		}
+
+		.teams {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px;
+			margin-top: 16px;
+		}
+
+		.team {
+			border: 1px solid var(--border);
+			border-radius: 10px;
+			padding: 12px;
+		}
+
+		.team h3 {
+			margin: 0 0 8px;
+			font-size: 16px;
+		}
+
+		.team ul {
+			margin: 0;
+			padding-left: 18px;
+		}
+
+		.pill {
+			display: inline-block;
+			padding: 2px 8px;
+			border: 1px dashed var(--border);
+			border-radius: 999px;
+			font-size: 12px;
+		}
+
+		.flex {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.space {
+			height: 8px;
+		}
+	</style>
+
+	<script>
+		// Register service worker for offline support
+		if ("serviceWorker" in navigator) {
+  			navigator.serviceWorker.register("service-worker.js")
+    		.then(() => console.log("Service Worker registered"));
+		}
+	</script>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Team Randomizer</h1>
-    <div class="muted">Add players once, select who’s playing now, generate two random teams, then share to WhatsApp.</div>
+	<div class="container">
+		<h1>Team Randomizer</h1>
+		<div class="muted">Add players once, select who’s playing now, generate two random teams, then share to
+			WhatsApp.
+		</div>
 
-    <div class="row" style="margin-top: 16px;">
-      <!-- Left: Player management -->
-      <div class="card">
-        <label for="playerName">Add a player</label>
-        <div class="flex">
-          <input id="playerName" type="text" placeholder="e.g. Kassem" />
-          <button class="btn btn-primary" id="addPlayerBtn">Add</button>
-        </div>
-        <div class="actions">
-          <button class="btn" id="selectAllBtn">Select all</button>
-          <button class="btn" id="clearSelectionBtn">Clear selection</button>
-          <button class="btn btn-danger" id="deleteSelectedBtn">Delete selected</button>
-        </div>
+		<div class="row" style="margin-top: 16px;">
+			<!-- Left: Player management -->
+			<div class="card">
+				<label for="playerName">Add a player</label>
+				<div class="flex">
+					<input id="playerName" type="text" placeholder="e.g. Kassem" />
+					<button class="btn btn-primary" id="addPlayerBtn">Add</button>
+				</div>
+				<div class="actions">
+					<button class="btn" id="selectAllBtn">Select all</button>
+					<button class="btn" id="clearSelectionBtn">Clear selection</button>
+					<button class="btn btn-danger" id="deleteSelectedBtn">Delete selected</button>
+				</div>
 
-        <div class="space"></div>
-        <div class="muted">Saved players (persisted locally):</div>
-        <div class="list" id="playersList"></div>
-      </div>
+				<div class="space"></div>
+				<div class="muted">Saved players (persisted locally):</div>
+				<div class="list" id="playersList"></div>
+			</div>
 
-      <!-- Right: Teams + Sharing -->
-      <div class="card">
-        <div class="flex">
-          <button class="btn btn-primary" id="generateBtn">Generate teams</button>
-          <span class="pill" id="statusPill">Waiting for selection…</span>
-        </div>
+			<!-- Right: Teams + Sharing -->
+			<div class="card">
+				<div class="flex">
+					<button class="btn btn-primary" id="generateBtn">Generate teams</button>
+					<span class="pill" id="statusPill">Waiting for selection…</span>
+				</div>
 
-        <div class="teams" id="teamsContainer" style="display:none;">
-          <div class="team">
-            <h3>Team A</h3>
-            <ul id="teamA"></ul>
-          </div>
-          <div class="team">
-            <h3>Team B</h3>
-            <ul id="teamB"></ul>
-          </div>
-        </div>
+				<div class="teams" id="teamsContainer" style="display:none;">
+					<div class="team">
+						<h3>Team A</h3>
+						<ul id="teamA"></ul>
+					</div>
+					<div class="team">
+						<h3>Team B</h3>
+						<ul id="teamB"></ul>
+					</div>
+				</div>
 
-        <div class="actions" style="margin-top: 16px;">
-          <button class="btn" id="copyBtn">Copy teams</button>
-          <button class="btn" id="shareBtn">Share to WhatsApp</button>
-        </div>
-        <div class="muted" id="shareHint" style="margin-top:8px;">
-          On desktop this opens WhatsApp Web; on mobile it opens the WhatsApp app. You choose the group to send.
-        </div>
-      </div>
-    </div>
-  </div>
+				<div class="actions" style="margin-top: 16px;">
+					<button class="btn" id="copyBtn">Copy teams</button>
+					<button class="btn" id="shareBtn">Share to WhatsApp</button>
+				</div>
+				<div class="muted" id="shareHint" style="margin-top:8px;">
+					On desktop this opens WhatsApp Web; on mobile it opens the WhatsApp app. You choose the group to
+					send.
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <script>
-    const STORAGE_KEY = 'teamRandomizerPlayers';
-    let players = loadPlayers();
+	<script>
+		const STORAGE_KEY = 'teamRandomizerPlayers';
+		let players = loadPlayers();
 
-    const playerNameInput = document.getElementById('playerName');
-    const addPlayerBtn = document.getElementById('addPlayerBtn');
-    const playersList = document.getElementById('playersList');
+		const playerNameInput = document.getElementById('playerName');
+		const addPlayerBtn = document.getElementById('addPlayerBtn');
+		const playersList = document.getElementById('playersList');
 
-    const selectAllBtn = document.getElementById('selectAllBtn');
-    const clearSelectionBtn = document.getElementById('clearSelectionBtn');
-    const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+		const selectAllBtn = document.getElementById('selectAllBtn');
+		const clearSelectionBtn = document.getElementById('clearSelectionBtn');
+		const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
 
-    const generateBtn = document.getElementById('generateBtn');
-    const statusPill = document.getElementById('statusPill');
-    const teamsContainer = document.getElementById('teamsContainer');
-    const teamAEl = document.getElementById('teamA');
-    const teamBEl = document.getElementById('teamB');
+		const generateBtn = document.getElementById('generateBtn');
+		const statusPill = document.getElementById('statusPill');
+		const teamsContainer = document.getElementById('teamsContainer');
+		const teamAEl = document.getElementById('teamA');
+		const teamBEl = document.getElementById('teamB');
 
-    const copyBtn = document.getElementById('copyBtn');
-    const shareBtn = document.getElementById('shareBtn');
-    const shareHint = document.getElementById('shareHint');
+		const copyBtn = document.getElementById('copyBtn');
+		const shareBtn = document.getElementById('shareBtn');
+		const shareHint = document.getElementById('shareHint');
 
-    function loadPlayers() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? JSON.parse(raw) : [];
-      } catch {
-        return [];
-      }
-    }
+		function loadPlayers() {
+			try {
+				const raw = localStorage.getItem(STORAGE_KEY);
+				return raw ? JSON.parse(raw) : [];
+			} catch {
+				return [];
+			}
+		}
 
-    function savePlayers() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(players));
-    }
+		function savePlayers() {
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(players));
+		}
 
-    function renderPlayers() {
-      playersList.innerHTML = '';
-      if (players.length === 0) {
-        playersList.innerHTML = '<div class="list-item muted">No players added yet.</div>';
-        return;
-      }
-      players.forEach((p, idx) => {
-        const row = document.createElement('div');
-        row.className = 'list-item';
+		function renderPlayers() {
+			playersList.innerHTML = '';
+			if (players.length === 0) {
+				playersList.innerHTML = '<div class="list-item muted">No players added yet.</div>';
+				return;
+			}
+			players.forEach((p, idx) => {
+				const row = document.createElement('div');
+				row.className = 'list-item';
 
-        const left = document.createElement('div');
-        left.className = 'flex';
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = !!p.selected;
-        checkbox.addEventListener('change', () => {
-          players[idx].selected = checkbox.checked;
-          savePlayers();
-          updateStatus();
-        });
+				const left = document.createElement('div');
+				left.className = 'flex';
+				const checkbox = document.createElement('input');
+				checkbox.type = 'checkbox';
+				checkbox.checked = !!p.selected;
+				checkbox.addEventListener('change', () => {
+					players[idx].selected = checkbox.checked;
+					savePlayers();
+					updateStatus();
+				});
 
-        const label = document.createElement('div');
-        label.textContent = p.name;
+				const label = document.createElement('div');
+				label.textContent = p.name;
 
-        left.appendChild(checkbox);
-        left.appendChild(label);
+				left.appendChild(checkbox);
+				left.appendChild(label);
 
-        const right = document.createElement('div');
-        const del = document.createElement('button');
-        del.className = 'btn btn-danger';
-        del.textContent = 'Delete';
-        del.addEventListener('click', () => {
-          players.splice(idx, 1);
-          savePlayers();
-          renderPlayers();
-          updateStatus();
-        });
-        right.appendChild(del);
+				const right = document.createElement('div');
+				const del = document.createElement('button');
+				del.className = 'btn btn-danger';
+				del.textContent = 'Delete';
+				del.addEventListener('click', () => {
+					players.splice(idx, 1);
+					savePlayers();
+					renderPlayers();
+					updateStatus();
+				});
+				right.appendChild(del);
 
-        row.appendChild(left);
-        row.appendChild(right);
-        playersList.appendChild(row);
-      });
-      updateStatus();
-    }
+				row.appendChild(left);
+				row.appendChild(right);
+				playersList.appendChild(row);
+			});
+			updateStatus();
+		}
 
-    function updateStatus() {
-      const selected = players.filter(p => p.selected);
-      if (selected.length === 0) {
-        statusPill.textContent = 'Waiting for selection…';
-      } else {
-        statusPill.textContent = `Selected: ${selected.length}`;
-      }
-    }
+		function updateStatus() {
+			const selected = players.filter(p => p.selected);
+			if (selected.length === 0) {
+				statusPill.textContent = 'Waiting for selection…';
+			} else {
+				statusPill.textContent = `Selected: ${selected.length}`;
+			}
+		}
 
-    function addPlayer(name) {
-      const trimmed = name.trim();
-      if (!trimmed) return;
-      if (players.some(p => p.name.toLowerCase() === trimmed.toLowerCase())) {
-        alert('Player already exists.');
-        return;
-      }
-      players.push({ name: trimmed, selected: true });
-      savePlayers();
-      playerNameInput.value = '';
-      renderPlayers();
-    }
+		function addPlayer(name) {
+			const trimmed = name.trim();
+			if (!trimmed) return;
+			if (players.some(p => p.name.toLowerCase() === trimmed.toLowerCase())) {
+				alert('Player already exists.');
+				return;
+			}
+			players.push({ name: trimmed, selected: true });
+			savePlayers();
+			playerNameInput.value = '';
+			renderPlayers();
+		}
 
-    function selectAll(flag) {
-      players = players.map(p => ({ ...p, selected: flag }));
-      savePlayers();
-      renderPlayers();
-    }
+		function selectAll(flag) {
+			players = players.map(p => ({ ...p, selected: flag }));
+			savePlayers();
+			renderPlayers();
+		}
 
-    function deleteSelected() {
-      players = players.filter(p => !p.selected);
-      savePlayers();
-      renderPlayers();
-    }
+		function deleteSelected() {
+			players = players.filter(p => !p.selected);
+			savePlayers();
+			renderPlayers();
+		}
 
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
+		function shuffle(array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+			return array;
+		}
 
-    function generateTeams() {
-      const selected = players.filter(p => p.selected).map(p => p.name);
-      if (selected.length < 2) {
-        alert('Select at least 2 players.');
-        return;
-      }
-      const shuffled = shuffle([...selected]);
-      const mid = Math.ceil(shuffled.length / 2);
-      const teamA = shuffled.slice(0, mid);
-      const teamB = shuffled.slice(mid);
+		function generateTeams() {
+			const selected = players.filter(p => p.selected).map(p => p.name);
+			if (selected.length < 2) {
+				alert('Select at least 2 players.');
+				return;
+			}
+			const shuffled = shuffle([...selected]);
+			const mid = Math.ceil(shuffled.length / 2);
+			const teamA = shuffled.slice(0, mid);
+			const teamB = shuffled.slice(mid);
 
-      renderTeamList(teamAEl, teamA);
-      renderTeamList(teamBEl, teamB);
-      teamsContainer.style.display = 'grid';
+			renderTeamList(teamAEl, teamA);
+			renderTeamList(teamBEl, teamB);
+			teamsContainer.style.display = 'grid';
 
-      const msg = formatMessage(teamA, teamB);
-      copyBtn.dataset.msg = msg;
-      shareBtn.dataset.msg = msg;
-    }
+			const msg = formatMessage(teamA, teamB);
+			copyBtn.dataset.msg = msg;
+			shareBtn.dataset.msg = msg;
+		}
 
-    function renderTeamList(el, team) {
-      el.innerHTML = '';
-      team.forEach(name => {
-        const li = document.createElement('li');
-        li.textContent = name;
-        el.appendChild(li);
-      });
-    }
+		function renderTeamList(el, team) {
+			el.innerHTML = '';
+			team.forEach(name => {
+				const li = document.createElement('li');
+				li.textContent = name;
+				el.appendChild(li);
+			});
+		}
 
-    function formatMessage(teamA, teamB) {
-      const lines = [
-        '🎮 New Teams',
-        `Team A (${teamA.length}): ${teamA.join(', ')}`,
-        `Team B (${teamB.length}): ${teamB.join(', ')}`,
-        'Good luck!'
-      ];
-      return lines.join('\n');
-    }
+		function formatMessage(teamA, teamB) {
+			const lines = [
+				'🎮 New Teams',
+				`Team A (${teamA.length}): ${teamA.join(', ')}`,
+				`Team B (${teamB.length}): ${teamB.join(', ')}`,
+				'Good luck!'
+			];
+			return lines.join('\n');
+		}
 
-    async function copyToClipboard(text) {
-      try {
-        await navigator.clipboard.writeText(text);
-        alert('Teams copied to clipboard.');
-      } catch {
-        // Fallback: create a temporary textarea
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        alert('Teams copied to clipboard.');
-      }
-    }
+		async function copyToClipboard(text) {
+			try {
+				await navigator.clipboard.writeText(text);
+				alert('Teams copied to clipboard.');
+			} catch {
+				// Fallback: create a temporary textarea
+				const ta = document.createElement('textarea');
+				ta.value = text;
+				document.body.appendChild(ta);
+				ta.select();
+				document.execCommand('copy');
+				document.body.removeChild(ta);
+				alert('Teams copied to clipboard.');
+			}
+		}
 
-    function shareToWhatsApp(message) {
-      const encoded = encodeURIComponent(message);
-      // Cross-platform: opens WhatsApp Web on desktop or app on mobile
-      const url = `https://api.whatsapp.com/send?text=${encoded}`;
-      window.open(url, '_blank');
-    }
+		function shareToWhatsApp(message) {
+			const encoded = encodeURIComponent(message);
+			// Cross-platform: opens WhatsApp Web on desktop or app on mobile
+			const url = `https://api.whatsapp.com/send?text=${encoded}`;
+			window.open(url, '_blank');
+		}
 
-    // Event bindings
-    addPlayerBtn.addEventListener('click', () => addPlayer(playerNameInput.value));
-    playerNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addPlayer(playerNameInput.value); });
+		// Event bindings
+		addPlayerBtn.addEventListener('click', () => addPlayer(playerNameInput.value));
+		playerNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addPlayer(playerNameInput.value); });
 
-    selectAllBtn.addEventListener('click', () => selectAll(true));
-    clearSelectionBtn.addEventListener('click', () => selectAll(false));
-    deleteSelectedBtn.addEventListener('click', () => {
-      if (confirm('Delete all selected players?')) deleteSelected();
-    });
+		selectAllBtn.addEventListener('click', () => selectAll(true));
+		clearSelectionBtn.addEventListener('click', () => selectAll(false));
+		deleteSelectedBtn.addEventListener('click', () => {
+			if (confirm('Delete all selected players?')) deleteSelected();
+		});
 
-    generateBtn.addEventListener('click', generateTeams);
-    copyBtn.addEventListener('click', () => copyToClipboard(copyBtn.dataset.msg || ''));
-    shareBtn.addEventListener('click', () => {
-      const msg = shareBtn.dataset.msg || '';
-      if (!msg) {
-        alert('Generate teams first.');
-        return;
-      }
-      shareToWhatsApp(msg);
-    });
+		generateBtn.addEventListener('click', generateTeams);
+		copyBtn.addEventListener('click', () => copyToClipboard(copyBtn.dataset.msg || ''));
+		shareBtn.addEventListener('click', () => {
+			const msg = shareBtn.dataset.msg || '';
+			if (!msg) {
+				alert('Generate teams first.');
+				return;
+			}
+			shareToWhatsApp(msg);
+		});
 
-    // Initial render
-    renderPlayers();
-  </script>
+		// Initial render
+		renderPlayers();
+	</script>
 </body>
+
 </html>
