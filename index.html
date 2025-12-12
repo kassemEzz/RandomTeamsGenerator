@@ -40,16 +40,19 @@
 			font-size: 24px;
 		}
 
-		.row {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 24px;
-		}
-
 		.card {
 			padding: 16px;
 			border: 1px solid var(--border);
 			border-radius: 12px;
+			width: 100%;
+			margin-bottom: 24px;
+		}
+
+		@media (min-width: 768px) {
+			.card {
+				max-width: 700px;
+				margin: 0 auto 24px;
+			}
 		}
 
 		label {
@@ -187,51 +190,49 @@
 			WhatsApp.
 		</div>
 
-		<div class="row" style="margin-top: 16px;">
-			<!-- Left: Player management -->
-			<div class="card">
-				<label for="playerName">Add a player</label>
-				<div class="flex">
-					<input id="playerName" type="text" placeholder="e.g. Kassem" />
-					<button class="btn btn-primary" id="addPlayerBtn">Add</button>
-				</div>
-				<div class="actions">
-					<button class="btn" id="selectAllBtn">Select all</button>
-					<button class="btn" id="clearSelectionBtn">Clear selection</button>
-					<button class="btn btn-danger" id="deleteSelectedBtn">Delete selected</button>
-				</div>
-
-				<div class="space"></div>
-				<div class="muted">Saved players (persisted locally):</div>
-				<div class="list" id="playersList"></div>
+		<!-- Left: Player management -->
+		<div class="card" id="playerCard">
+			<label for="playerName">Add a player</label>
+			<div class="flex">
+				<input id="playerName" type="text" placeholder="e.g. Kassem" />
+				<button class="btn btn-primary" id="addPlayerBtn">Add</button>
+			</div>
+			<div class="actions">
+				<button class="btn" id="selectAllBtn">Select all</button>
+				<button class="btn" id="clearSelectionBtn">Clear selection</button>
+				<button class="btn btn-danger" id="deleteSelectedBtn">Delete selected</button>
 			</div>
 
-			<!-- Right: Teams + Sharing -->
-			<div class="card">
-				<div class="flex">
-					<button class="btn btn-primary" id="generateBtn">Generate teams</button>
-					<span class="pill" id="statusPill">Waiting for selection…</span>
-				</div>
+			<div class="space"></div>
+			<div class="muted">Saved players (persisted locally):</div>
+			<div class="list" id="playersList"></div>
+		</div>
 
-				<div class="teams" id="teamsContainer" style="display:none;">
-					<div class="team">
-						<h3>Team A</h3>
-						<ul id="teamA"></ul>
-					</div>
-					<div class="team">
-						<h3>Team B</h3>
-						<ul id="teamB"></ul>
-					</div>
-				</div>
+		<!-- Right: Teams + Sharing -->
+		<div class="card" id="teamCard">
+			<div class="flex">
+				<button class="btn btn-primary" id="generateBtn">Generate teams</button>
+				<span class="pill" id="statusPill">Waiting for selection…</span>
+			</div>
 
-				<div class="actions" style="margin-top: 16px;">
-					<button class="btn" id="copyBtn">Copy teams</button>
-					<button class="btn" id="shareBtn">Share to WhatsApp</button>
+			<div class="teams" id="teamsContainer" style="display:none;">
+				<div class="team">
+					<h3>Team A</h3>
+					<ul id="teamA"></ul>
 				</div>
-				<div class="muted" id="shareHint" style="margin-top:8px;">
-					On desktop this opens WhatsApp Web; on mobile it opens the WhatsApp app. You choose the group to
-					send.
+				<div class="team">
+					<h3>Team B</h3>
+					<ul id="teamB"></ul>
 				</div>
+			</div>
+
+			<div class="actions" style="margin-top: 16px;">
+				<button class="btn" id="copyBtn">Copy teams</button>
+				<button class="btn" id="shareBtn">Share to WhatsApp</button>
+			</div>
+			<div class="muted" id="shareHint" style="margin-top:8px;">
+				On desktop this opens WhatsApp Web; on mobile it opens the WhatsApp app. You choose the group to
+				send.
 			</div>
 		</div>
 	</div>
